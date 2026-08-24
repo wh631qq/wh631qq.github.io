@@ -278,12 +278,11 @@ main.container {
 .post-meta {
   color: var(--text-secondary);
   font-size: 0.9rem;
-  margin: 0 0 28px;
+  margin: 0 0 16px;
 }
 
 .post-body {
   font-size: 1.02rem;
-  white-space: pre-line;
 }
 
 .post-body p {
