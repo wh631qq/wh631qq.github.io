@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
-"""一键发布：读取「写文章.txt」，生成文章并推送上线。
+"""一键发布：读取「写文章.txt」，生成一篇新文章并推送上线。
 
 用法：双击「发布.bat」，或在命令行运行  python publish.py
-规则：写文章.txt 第一行是标题（留空则默认「随思」），之后是正文。
-      正文里：回车一次=接着写，空一行及以上=新段落。
+规则：
+  - 写文章.txt 第一行是标题（留空则默认「随思」），之后是正文。
+  - 正文里：回车一次 = 接着写，空一行及以上 = 新段落。
+  - 每次发布会生成一篇新文章（文件名带时间戳），不会覆盖旧文。
+  - 要修改旧文，直接编辑 posts/ 目录下对应的 html 文件。
 """
 import datetime
 import html
@@ -14,8 +17,8 @@ import sys
 
 BASE = os.path.dirname(os.path.abspath(__file__))
 DRAFT = os.path.join(BASE, '写文章.txt')
-ARTICLE = os.path.join(BASE, 'posts', '随思.html')
 INDEX = os.path.join(BASE, 'index.html')
+POSTS = os.path.join(BASE, 'posts')
 DEFAULT_TITLE = '随思'
 
 ARTICLE_TEMPLATE = '''<!DOCTYPE html>
@@ -87,19 +90,24 @@ def read_draft():
     return title, content
 
 
-def update_index(title, now):
+def make_filename(title, now):
+    safe = re.sub(r'[\\/:*?"<>|]', '', title).strip() or DEFAULT_TITLE
+    return safe + '-' + now.strftime('%Y%m%d-%H%M%S') + '.html'
+
+
+def update_index(title, now, filename):
     with open(INDEX, encoding='utf-8') as f:
         index_html = f.read()
-    entry = ('<li>\n'
-             '          <a class="post-link" href="posts/随思.html">\n'
-             '            <span class="post-title">' + html.escape(title) + '</span>\n'
-             '            <time class="post-date">' + now.strftime('%Y-%m-%d') + '</time>\n'
+    # 更新分类标题
+    index_html = re.sub(r'<h2[^>]*>.*?</h2>', '<h2>' + html.escape(title) + '</h2>', index_html, count=1)
+    # 在列表最前面插入新条目
+    entry = ('        <li>\n'
+             '          <a class="post-link" href="posts/' + filename + '">\n'
+             '            <time class="post-date">' + now.strftime('%Y-%m-%d %H:%M') + '</time>\n'
              '          </a>\n'
-             '        </li>')
-    pattern = re.compile(r'<!-- POSTS_START -->.*?<!-- POSTS_END -->', re.S)
-    replacement = '<!-- POSTS_START -->\n        ' + entry + '\n        <!-- POSTS_END -->'
-    if pattern.search(index_html):
-        index_html = pattern.sub(replacement, index_html)
+             '        </li>\n')
+    marker = '        <!-- POSTS_START -->\n'
+    index_html = index_html.replace(marker, marker + entry, 1)
     with open(INDEX, 'w', encoding='utf-8') as f:
         f.write(index_html)
 
@@ -114,14 +122,15 @@ def main():
         print('「写文章.txt」里还没有正文内容。')
         sys.exit(1)
     now = datetime.datetime.now()
+    filename = make_filename(title, now)
     article = (ARTICLE_TEMPLATE
                .replace('{title}', html.escape(title))
                .replace('{datetime}', now.strftime('%Y-%m-%dT%H:%M'))
                .replace('{date}', now.strftime('%Y-%m-%d %H:%M'))
                .replace('{content}', html.escape(content)))
-    with open(ARTICLE, 'w', encoding='utf-8') as f:
+    with open(os.path.join(POSTS, filename), 'w', encoding='utf-8') as f:
         f.write(article)
-    update_index(title, now)
+    update_index(title, now, filename)
     run(['git', 'add', '-A'])
     r = subprocess.run(['git', 'diff', '--cached', '--quiet'], cwd=BASE)
     if r.returncode == 0:
@@ -129,7 +138,7 @@ def main():
         return
     run(['git', 'commit', '-m', '发布：' + title])
     run(['git', 'push'])
-    print('已发布：' + title + ' @ ' + now.strftime('%Y-%m-%d %H:%M'))
+    print('已发布新文章：' + title + ' @ ' + now.strftime('%Y-%m-%d %H:%M'))
 
 
 if __name__ == '__main__':

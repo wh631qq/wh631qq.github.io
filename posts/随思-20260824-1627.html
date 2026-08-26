@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <title>随思 · 大橘的博客</title>
+  <meta name="description" content="随思">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="../index.html">大橘的博客</a>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="切换深色/浅色主题">🌙</button>
+        <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+      <nav class="site-nav">
+        <a href="../index.html">首页</a>
+        <a href="../about.html">关于</a>
+        <a href="../friends.html">友情链接</a>
+        <a href="../contact.html">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <h1>随思</h1>
+      <p class="post-meta"><time datetime="2026-08-24T16:27">2026-08-24 16:27</time></p>
+      <div class="post-body">《苦昼短》
+
+飞光飞光，劝尔一杯酒。
+
+吾不识青天高，黄地厚，
+
+唯见月寒日暖，来煎人寿。
+
+食熊则肥，食蛙则瘦。
+
+神君何在？太一安有？
+
+天东有若木，下置衔烛龙。
+
+吾将斩龙足，嚼龙肉，
+
+使之朝不得回，夜不得伏。
+
+自然老者不死，少者不哭。
+
+何为服黄金、吞白玉？
+
+谁似任公子，云中骑碧驴？
+
+刘彻茂陵多滞骨，嬴政梓棺费鲍鱼。
+
+
+中午回去冷水冲凉，胡乱抽了几支香烟，并没有仍在地上踩灭，用手掐了一次没灭掐了一次没灭，他妈的连香烟都在气我，听摇滚，又听到了那个最是难熬的时候喜欢听的几首歌。
+
+
+此情怎消解！</div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 大橘的博客 · 由 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 驱动</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
