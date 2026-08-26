@@ -36,7 +36,7 @@
   applyIcon();
 })();
 
-// 文章正文换行规则：回车一次 = 接着写，空一行 = 换行，空更多 = 新段落
+// 文章正文换行规则：回车一次 = 接着写，空一行及以上 = 新段落
 (function () {
   var bodies = document.querySelectorAll('.post-body');
   bodies.forEach(function (body) {
@@ -45,8 +45,8 @@
       .replace(/[ \t]+\n/g, '\n')
       .replace(/\n[ \t]+/g, '\n')
       .trim();
-    var html = text.split(/\n{3,}/).map(function (p) {
-      return '<p>' + p.replace(/\n\n/g, '<br>').replace(/\n/g, '') + '</p>';
+    var html = text.split(/\n{2,}/).map(function (p) {
+      return '<p>' + p.replace(/\n/g, '') + '</p>';
     }).join('');
     body.innerHTML = html;
   });
