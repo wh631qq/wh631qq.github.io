@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <title>随思 · 大橘的博客</title>
+  <meta name="description" content="随思">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="../index.html">大橘的博客</a>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="切换深色/浅色主题">🌙</button>
+        <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+      <nav class="site-nav">
+        <a href="../index.html">首页</a>
+        <a href="../about.html">关于</a>
+        <a href="../friends.html">友情链接</a>
+        <a href="../contact.html">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <h1>随思</h1>
+      <p class="post-meta"><time datetime="2026-08-26T15:22">2026-08-26 15:22</time></p>
+      <div class="post-body">反者道之动，弱者道之用。
+
+我的理解是，想要改变的时候，就是最痛苦的时候，或者说痛苦的时候，恰恰是内心最想要改变的时候。</div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 大橘的博客 · 由 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 驱动</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
