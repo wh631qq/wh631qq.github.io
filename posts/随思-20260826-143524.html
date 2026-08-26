@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function () {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <title>随思 · 大橘的博客</title>
+  <meta name="description" content="随思">
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-inner">
+      <a class="site-title" href="../index.html">大橘的博客</a>
+      <div class="header-actions">
+        <button class="theme-toggle" aria-label="切换深色/浅色主题">🌙</button>
+        <button class="nav-toggle" aria-label="打开菜单" aria-expanded="false"><span></span><span></span><span></span></button>
+      </div>
+      <nav class="site-nav">
+        <a href="../index.html">首页</a>
+        <a href="../about.html">关于</a>
+        <a href="../friends.html">友情链接</a>
+        <a href="../contact.html">联系</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <article class="post">
+      <h1>随思</h1>
+      <p class="post-meta"><time datetime="2026-08-26T14:35">2026-08-26 14:35</time></p>
+      <div class="post-body">和同事GXY说了同事JSJ不好的话，GXY和JSJ说了这件事，明明我和JSJ关系蛮好的，
+她叫我乖乖，跟我说了她生理期，我也摸了她的耳朵其实是耳钉。
+
+下载了算命的skill，算了缘分，说是让我尽量远离这段事情。（我一直怀疑算命，比如，一个成功的人说的话，会更容易被认作是正确的，
+哪怕他并不擅长这件事，就比如我的研究生导师，我讨厌他在他不懂的领域胡乱指挥我）
+算命也只不过是，让人们有了一个先验。因为算命师大多数是不成功的，所以这个先验就是让人们觉得这个人是成功的，
+最起码在开导他人的这条路上是成功的，因此也就更愿意相信其所说的话。
+
+记得卡马拉佐夫兄弟，有个神父百灵百验，后来见的人多了，看一眼就知道出身，谈吐就是成长的环境，更别说循循善诱，引导赎罪的人说话，获取了更多的信息，
+所以我认为算命大多数时候只起到心理作用。</div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2026 大橘的博客 · 由 <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a> 驱动</p>
+    </div>
+  </footer>
+
+  <script src="../js/main.js"></script>
+</body>
+</html>
