@@ -3,7 +3,7 @@
 
 用法：双击「发布.bat」，或在命令行运行  python publish.py
 规则：
-  - 写文章.txt 第一行是标题（留空则默认「随思」），之后是正文。
+  - 标题固定为「随思」，写文章.txt 里只写正文即可。
   - 正文里：回车一次 = 接着写，空一行及以上 = 新段落。
   - 每次发布会生成一篇新文章（文件名带时间戳），不会覆盖旧文。
   - 要修改旧文，直接编辑 posts/ 目录下对应的 html 文件。
@@ -77,17 +77,8 @@ ARTICLE_TEMPLATE = '''<!DOCTYPE html>
 
 def read_draft():
     with open(DRAFT, encoding='utf-8') as f:
-        text = f.read()
-    lines = text.split('\n')
-    title = DEFAULT_TITLE
-    start = 0
-    for i, line in enumerate(lines):
-        if line.strip():
-            title = line.strip()
-            start = i + 1
-            break
-    content = '\n'.join(lines[start:]).strip()
-    return title, content
+        content = f.read().strip()
+    return DEFAULT_TITLE, content
 
 
 def make_filename(title, now):
@@ -113,9 +104,7 @@ def extract_content(html_text):
 def update_index(title, now, filename):
     with open(INDEX, encoding='utf-8') as f:
         index_html = f.read()
-    # 更新分类标题
-    index_html = re.sub(r'<h2[^>]*>.*?</h2>', '<h2>' + html.escape(title) + '</h2>', index_html, count=1)
-    # 在列表最前面插入新条目
+    # 在列表最前面插入新条目（标题固定为「随思」，不更新标题）
     entry = ('        <li>\n'
              '          <a class="post-link" href="posts/' + filename + '">\n'
              '            <time class="post-date">' + now.strftime('%Y-%m-%d %H:%M') + '</time>\n'
