@@ -95,6 +95,21 @@ def make_filename(title, now):
     return safe + '-' + now.strftime('%Y%m%d-%H%M%S') + '.html'
 
 
+def find_latest_article():
+    files = [f for f in os.listdir(POSTS) if f.endswith('.html') and not f.startswith('_')]
+    if not files:
+        return None
+    files.sort(reverse=True)
+    return os.path.join(POSTS, files[0])
+
+
+def extract_content(html_text):
+    m = re.search(r'<div class="post-body">(.*?)</div>', html_text, re.S)
+    if not m:
+        return ''
+    return html.unescape(m.group(1)).strip()
+
+
 def update_index(title, now, filename):
     with open(INDEX, encoding='utf-8') as f:
         index_html = f.read()
@@ -121,6 +136,13 @@ def main():
     if not content:
         print('「写文章.txt」里还没有正文内容。')
         sys.exit(1)
+    latest = find_latest_article()
+    if latest:
+        with open(latest, encoding='utf-8') as f:
+            latest_content = extract_content(f.read())
+        if latest_content == content:
+            print('内容与最新一篇相同，没有生成新文章。')
+            return
     now = datetime.datetime.now()
     filename = make_filename(title, now)
     article = (ARTICLE_TEMPLATE
